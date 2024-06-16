@@ -1,0 +1,64 @@
+{
+  "todos": [
+    {
+      "id": "1",
+      "title": "Learn React",
+      "isComplete": true
+    },
+    {
+      "id": "2",
+      "title": "Build a Todo App",
+      "isComplete": true
+    },
+    {
+      "id": "3",
+      "title": "Read JavaScript Documentation",
+      "isComplete": true
+    },
+    {
+      "id": "4",
+      "title": "Write Unit Tests",
+      "isComplete": false
+    },
+    {
+      "id": "5",
+      "title": "Implement Context",
+      "isComplete": false
+    },
+    {
+      "id": "6",
+      "title": "Create Portfolio Website",
+      "isComplete": false
+    },
+    {
+      "id": "7",
+      "title": "Learn TypeScript",
+      "isComplete": false
+    },
+    {
+      "id": "8",
+      "title": "Refactor Codebase",
+      "isComplete": false
+    },
+    {
+      "id": "a3eb",
+      "title": "Test",
+      "isComplete": false
+    },
+    {
+      "id": "4583",
+      "title": "Test 2",
+      "isComplete": false
+    },
+    {
+      "id": "6d20",
+      "title": "Ramin's React",
+      "isComplete": false
+    },
+    {
+      "id": "1941",
+      "title": "asdsafaf",
+      "isComplete": false
+    }
+  ]
+}
