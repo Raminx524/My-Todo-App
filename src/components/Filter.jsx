@@ -38,18 +38,6 @@ export function Filter(props) {
             </Select>
           </FormControl>
         </Box>
-
-        {/* <select
-          name="searchByStatus"
-          id="searchByStatus"
-          onChange={(e) => {
-            props.setSelectVal(e.target.value);
-          }}
-        >
-          <option value="">All</option>
-          <option value={false}>Ongoing</option>
-          <option value={true}>Completed</option>
-        </select> */}
       </div>
     </div>
   );

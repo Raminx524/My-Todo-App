@@ -18,17 +18,17 @@
     {
       "id": "4",
       "title": "Write Unit Tests",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": "5",
       "title": "Implement Context",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": "6",
       "title": "Create Portfolio Website",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "id": "7",
@@ -43,21 +43,6 @@
     {
       "id": "a3eb",
       "title": "Test",
-      "isComplete": false
-    },
-    {
-      "id": "4583",
-      "title": "Test 2",
-      "isComplete": false
-    },
-    {
-      "id": "6d20",
-      "title": "Ramin's React",
-      "isComplete": false
-    },
-    {
-      "id": "1941",
-      "title": "asdsafaf",
       "isComplete": false
     }
   ]

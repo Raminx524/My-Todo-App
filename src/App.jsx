@@ -1,74 +1,21 @@
-import { useEffect, useState, useMemo } from "react";
-import { TodoList } from "./components/TodoList";
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import { TodoPage } from "./Pages/TodosPage";
+import { HomePage } from "./Pages/HomePage";
+import { NotFoundPage } from "./Pages/NotFoundPage";
+import { Navbar } from "./components/Navbar";
 import { AddTodoForm } from "./components/AddTodo";
-import { Stats } from "./components/Stats";
-import { Filter } from "./components/Filter";
-const BASE_URL = "http://localhost:8001/todos";
+import { TodoDetails } from "./Pages/TodoDetails";
+import { SimpleSnackbar } from "./components/SimpleSnackbar";
 
-function App() {
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [searchVal, setSearchVal] = useState("");
-  const [selectVal, setSelectVal] = useState("");
-  useEffect(() => {
-    async function getTodos() {
-      try {
-        setLoading(true);
-        const fetchedData = await (await fetch(BASE_URL)).json();
-        setTodos(fetchedData);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getTodos();
-  }, []);
-  useEffect(() => console.log(todos), [todos]);
+export default function App() {
+  const BASE_URL = "http://localhost:8001/todos";
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const filteredTodos = useMemo(() => {
-    if (selectVal !== "") {
-      return todos.filter(
-        (todo) =>
-          todo.title.toLowerCase().includes(searchVal.toLowerCase()) &&
-          todo.isComplete === selectVal
-      );
-    }
-    return todos.filter((todo) =>
-      todo.title.toLowerCase().includes(searchVal.toLowerCase())
-    );
-  }, [todos, searchVal, selectVal]);
-
-  async function onCheckBox(todoToUpdate, newStatus) {
-    try {
-      const res = await fetch(`${BASE_URL}/${todoToUpdate.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...todoToUpdate, isComplete: newStatus }),
-      });
-      const newTodo = await res.json();
-      setTodos((prevTodos) => {
-        return prevTodos.map((todo) => {
-          if (todo.id === todoToUpdate.id) {
-            return newTodo;
-          }
-          return todo;
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function onDelete(todoId) {
-    try {
-      await fetch(`${BASE_URL}/${todoId}`, { method: "DELETE" });
-      setTodos((prevTodos) => {
-        return prevTodos.filter((todo) => todo.id !== todoId);
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  function handleSnackBar(msg) {
+    setMessage(msg);
+    setOpen(true);
   }
 
   async function onAdd(e) {
@@ -85,35 +32,30 @@ function App() {
       });
       const newTodo = await res.json();
       setTodos((prevTodos) => [...prevTodos, newTodo]);
+      handleSnackBar("Todo Added Successfully");
       formElem.todoTitle.value = "";
     } catch (err) {
       console.log(err);
+      handleSnackBar("Something Went Wrong!");
     }
   }
 
   return (
     <>
-      <h1>My Todos:</h1>
-      <Stats todos={todos} />
-      <Filter
-        searchVal={searchVal}
-        setSearchVal={setSearchVal}
-        selectVal={selectVal}
-        setSelectVal={setSelectVal}
-      />
-      <div className="content">
-        <TodoList
-          todos={todos}
-          filteredTodos={filteredTodos}
-          setTodos={setTodos}
-          loading={loading}
-          onCheckBox={onCheckBox}
-          onDelete={onDelete}
-        />
-        <AddTodoForm onAdd={onAdd} />
-      </div>
+      <Navbar />
+      <SimpleSnackbar open={open} setOpen={setOpen} message={message} />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/todos">
+          <Route index element={<TodoPage />} />
+          <Route
+            path=":id"
+            element={<TodoDetails handleSnackBar={handleSnackBar} />}
+          />
+          <Route path="create" element={<AddTodoForm onAdd={onAdd} />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </>
   );
 }
-
-export default App;
